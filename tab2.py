@@ -1,4 +1,4 @@
-from PySide6.QtGui import QMouseEvent
+from PySide6.QtGui import QMouseEvent 
 from design2 import Ui_Form as View
 from PySide6.QtWidgets import QWidget
 import cv2
@@ -22,8 +22,8 @@ class Task2(QWidget,View):
         pixmap = QPixmap(self.image)
         self.NetLabel.setPixmap(pixmap)
 
-        self.label1.setText("illegal -two clicks-")
-        self.label2.setText("disrupted -one click-")
+        self.label1.setText("illegal -right click-")
+        self.label2.setText("disrupted -left click-")
         self.lastClick = None
 
         self.illegalLabel.setText(str(self.illegalCounter))
@@ -39,12 +39,10 @@ class Task2(QWidget,View):
 
     def mousePressEvent(self, event: QMouseEvent) -> None:
         
-        self.start=timer()
-        #print(f"first {self.start} , {self.end} ")
-        
-
-        if (self.end-self.start<=-0.3226495 or  self.end==0  ):
-            self.FirstClick(event.x(),event.y())
+        if event.button() == Qt.LeftButton:
+               self.FirstClick(event.x(),event.y())
+        else :
+            self.SecondClick(event.x(),event.y())
         
         return super().mousePressEvent(event)
  
@@ -65,3 +63,4 @@ class Task2(QWidget,View):
         self.illegalCounter+=1
         self.illegalLabel.setText(str(self.illegalCounter))
         self.doubleClicked=True
+
